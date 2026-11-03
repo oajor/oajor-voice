@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تغییر صدای آنلاین | اثر @oajor</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
+  <style>
+    body { font-family: 'Vazirmatn', sans-serif; }
+  </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between items-center p-4">
+
+  <header class="w-full max-w-xl flex flex-col sm:flex-row items-center justify-between py-4 border-b border-slate-800 gap-3">
+    <div class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30">
+        <i class="fa-solid fa-microphone-lines text-white"></i>
+      </div>
+      <div>
+        <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">تغییر صدای حرفه‌ای</h1>
+        <p class="text-xs text-slate-400">پردازش آنی بدون افت کیفیت</p>
+      </div>
+    </div>
+
+    <a href="https://t.me/oajor" target="_blank" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-900 transition-all text-xs">
+      <i class="fa-brands fa-telegram text-sm text-sky-400"></i>
+      <span>طراحی و توسعه: <strong>oajor@</strong></span>
+    </a>
+  </header>
+
+  <main class="w-full max-w-xl my-6 flex flex-col gap-5">
+    <div class="grid grid-cols-2 gap-3">
+      <div id="recordBtn" onclick="toggleRecord()" class="bg-slate-900 border border-slate-800 hover:border-rose-500/50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-all">
+        <div class="w-12 h-12 rounded-full bg-rose-600/20 flex items-center justify-center">
+          <i id="micIcon" class="fa-solid fa-microphone text-rose-500 text-xl"></i>
+        </div>
+        <div class="font-medium text-xs text-slate-200" id="recordStatus">ضبط با میکروفون</div>
+        <div id="recordTimer" class="text-[10px] font-mono text-slate-400">00:00</div>
+      </div>
+
+      <label class="bg-slate-900 border border-dashed border-slate-800 hover:border-indigo-500/50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-all">
+        <div class="w-12 h-12 rounded-full bg-indigo-600/20 flex items-center justify-center">
+          <i class="fa-solid fa-cloud-arrow-up text-indigo-400 text-xl"></i>
+        </div>
+        <div class="font-medium text-xs text-indigo-300">انتخاب فایل صوتی</div>
+        <span id="audioTrackName" class="text-[10px] text-slate-500 truncate max-w-[120px]">هنوز فایلی انتخاب نشده</span>
+        <input type="file" id="audioFileInput" accept="audio/*" class="hidden" onchange="handleFileUpload(event)">
+      </label>
+    </div>
+
+    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col gap-3">
+      <div class="text-xs font-semibold text-slate-400">نوع تغییر صدا را انتخاب کنید:</div>
+      <div class="grid grid-cols-4 gap-2">
+        <button onclick="applyPreset('normal')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-user text-slate-400"></i> اصلی
+        </button>
+        <button onclick="applyPreset('chipmunk')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-paw text-amber-400"></i> سنجاب
+        </button>
+        <button onclick="applyPreset('monster')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-dragon text-purple-400"></i> دیو / بم
+        </button>
+        <button onclick="applyPreset('robot')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-robot text-cyan-400"></i> ربات
+        </button>
+        <button onclick="applyPreset('walkie')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-walkie-talkie text-emerald-400"></i> بی‌سیم
+        </button>
+        <button onclick="applyPreset('cave')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-mountain text-blue-400"></i> اکو غار
+        </button>
+        <button onclick="applyPreset('hacker')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-user-secret text-emerald-500"></i> هکر
+        </button>
+        <button onclick="applyPreset('helium')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
+          <i class="fa-solid fa-cloud text-pink-400"></i> هلیوم
+        </button>
+      </div>
+    </div>
+
+    <div class="flex gap-2">
+      <button id="previewBtn" onclick="togglePlayback()" disabled class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs flex items-center justify-center gap-2">
+        <i id="playIcon" class="fa-solid fa-play"></i> پخش تست
+      </button>
+      <button id="downloadBtn" onclick="downloadModifiedAudio()" disabled class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs flex items-center justify-center gap-2">
+        <i class="fa-solid fa-download"></i> دانلود خروجی (WAV)
+      </button>
+    </div>
+  </main>
+
+  <footer class="w-full max-w-xl text-center py-4 border-t border-slate-800/80 text-xs text-slate-500">
+    ساخته شده توسط <a href="https://t.me/oajor" target="_blank" class="text-indigo-400 font-semibold hover:underline">oajor@</a> برای اعضای کانال
+  </footer>
+
+  <script>
+    let audioCtx = null, originalBuffer = null, currentSource = null, isPlaying = false, isRecording = false, mediaRecorder = null, recordedChunks = [], recordInterval = null, recordSeconds = 0;
+    let settings = { pitch: 1.0, bass: 0, treble: 0, echoDelay: 0 };
+
+    function initAudio() {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+    }
+
+    async function handleFileUpload(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      initAudio();
+      document.getElementById('audioTrackName').innerText = file.name;
+      const arrayBuffer = await file.arrayBuffer();
+      originalBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+      enableControls();
+    }
+
+    async function toggleRecord() {
+      initAudio();
+      if (!isRecording) {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+          mediaRecorder = new MediaRecorder(stream);
+          recordedChunks = [];
+          mediaRecorder.ondataavailable = e => recordedChunks.push(e.data);
+          mediaRecorder.onstop = async () => {
+            const blob = new Blob(recordedChunks, { type: 'audio/webm' });
+            const arrayBuffer = await blob.arrayBuffer();
+            originalBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+            document.getElementById('audioTrackName').innerText = 'صدای ضبط‌شده';
+            enableControls();
+          };
+          mediaRecorder.start();
+          isRecording = true;
+          document.getElementById('recordStatus').innerText = 'توقف ضبط';
+          document.getElementById('micIcon').className = 'fa-solid fa-stop text-white';
+          recordSeconds = 0;
+          recordInterval = setInterval(() => {
+            recordSeconds++;
+            const m = String(Math.floor(recordSeconds / 60)).padStart(2, '0');
+            const s = String(recordSeconds % 60).padStart(2, '0');
+            document.getElementById('recordTimer').innerText = `${m}:${s}`;
+          }, 1000);
+        } catch (err) {
+          alert('لطفاً دسترسی میکروفون را مجاز کنید.');
+        }
+      } else {
+        mediaRecorder.stop();
+        mediaRecorder.stream.getTracks().forEach(t => t.stop());
+        clearInterval(recordInterval);
+        isRecording = false;
+        document.getElementById('recordStatus').innerText = 'ضبط مجدد';
+        document.getElementById('micIcon').className = 'fa-solid fa-microphone text-rose-500';
+      }
+    }
+
+    function enableControls() {
+      document.getElementById('previewBtn').disabled = false;
+      document.getElementById('downloadBtn').disabled = false;
+    }
+
+    function applyPreset(t) {
+      if (t === 'normal') settings = { pitch: 1.0, bass: 0, treble: 0, echoDelay: 0 };
+      if (t === 'chipmunk') settings = { pitch: 1.6, bass: -6, treble: 8, echoDelay: 0 };
+      if (t === 'monster') settings = { pitch: 0.65, bass: 12, treble: -8, echoDelay: 0.1 };
+      if (t === 'robot') settings = { pitch: 0.9, bass: 4, treble: 4, echoDelay: 0.05 };
+      if (t === 'walkie') settings = { pitch: 1.05, bass: -15, treble: 12, echoDelay: 0 };
+      if (t === 'cave') settings = { pitch: 0.95, bass: 3, treble: 0, echoDelay: 0.35 };
+      if (t === 'hacker') settings = { pitch: 0.8, bass: 8, treble: -5, echoDelay: 0.15 };
+      if (t === 'helium') settings = { pitch: 1.8, bass: -10, treble: 10, echoDelay: 0 };
+      if (isPlaying) { stopPlayback(); startPlayback(); }
+    }
+
+    function buildPipeline(ctx, src) {
+      src.playbackRate.value = settings.pitch;
+      const b = ctx.createBiquadFilter(); b.type = 'lowshelf'; b.frequency.value = 250; b.gain.value = settings.bass;
+      const tr = ctx.createBiquadFilter(); tr.type = 'highshelf'; tr.frequency.value = 3500; tr.gain.value = settings.treble;
+      src.connect(b); b.connect(tr);
+      let last = tr;
+      if (settings.echoDelay > 0) {
+        const d = ctx.createDelay(); d.delayTime.value = settings.echoDelay;
+        const fb = ctx.createGain(); fb.gain.value = 0.4;
+        last.connect(d); d.connect(fb); fb.connect(d);
+        const m = ctx.createGain(); last.connect(m); d.connect(m); last = m;
+      }
+      return last;
+    }
+
+    function togglePlayback() { isPlaying ? stopPlayback() : startPlayback(); }
+
+    function startPlayback() {
+      if (!originalBuffer) return;
+      initAudio();
+      currentSource = audioCtx.createBufferSource();
+      currentSource.buffer = originalBuffer;
+      const p = buildPipeline(audioCtx, currentSource);
+      p.connect(audioCtx.destination);
+      currentSource.onended = () => stopPlayback();
+      currentSource.start();
+      isPlaying = true;
+      document.getElementById('playIcon').className = 'fa-solid fa-square';
+    }
+
+    function stopPlayback() {
+      if (currentSource) { try { currentSource.stop(); } catch(e){} currentSource.disconnect(); }
+      isPlaying = false;
+      document.getElementById('playIcon').className = 'fa-solid fa-play';
+    }
+
+    async function downloadModifiedAudio() {
+      if (!originalBuffer) return;
+      const dur = originalBuffer.duration / settings.pitch;
+      const offCtx = new OfflineAudioContext(originalBuffer.numberOfChannels, Math.ceil(originalBuffer.sampleRate * dur), originalBuffer.sampleRate);
+      const src = offCtx.createBufferSource();
+      src.buffer = originalBuffer;
+      const p = buildPipeline(offCtx, src);
+      p.connect(offCtx.destination);
+      src.start();
+      const res = await offCtx.startRendering();
+      const wav = bufferToWav(res);
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(wav);
+      a.download = 'voice-oajor.wav';
+      a.click();
+    }
+
+    function bufferToWav(b) {
+      let n = b.numberOfChannels, len = b.length * n * 2 + 44, dv = new DataView(new ArrayBuffer(len)), ch = [], p = 0;
+      function w16(d) { dv.setUint16(p, d, true); p += 2; }
+      function w32(d) { dv.setUint32(p, d, true); p += 4; }
+      w32(0x46464952); w32(len - 8); w32(0x45564157); w32(0x20746d66);
+      w32(16); w16(1); w16(n); w32(b.sampleRate); w32(b.sampleRate * 2 * n);
+      w16(n * 2); w16(16); w32(0x61746164); w32(len - p - 4);
+      for (let i = 0; i < n; i++) ch.push(b.getChannelData(i));
+      let o = 0;
+      while (o < b.length) {
+        for (let i = 0; i < n; i++) {
+          let s = Math.max(-1, Math.min(1, ch[i][o]));
+          s = (s < 0 ? s * 32768 : s * 32767) | 0;
+          dv.setInt16(p, s, true); p += 2;
+        }
+        o++;
+      }
+      return new Blob([dv.buffer], { type: 'audio/wav' });
+    }
+  </script>
+</body>
+  </html>
+  
