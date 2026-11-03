@@ -3,100 +3,161 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تغییر صدای آنلاین | اثر @oajor</title>
+  <title>تغییر صدای آنلاین حرفه‌ای | اثر @oajor</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet">
   <style>
     body { font-family: 'Vazirmatn', sans-serif; }
+    .active-preset {
+      border-color: #6366f1 !important;
+      background: rgba(99, 102, 241, 0.25) !important;
+      transform: scale(0.98);
+    }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between items-center p-4">
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between items-center p-3 sm:p-5">
 
-  <header class="w-full max-w-xl flex flex-col sm:flex-row items-center justify-between py-4 border-b border-slate-800 gap-3">
+  <!-- Header -->
+  <header class="w-full max-w-2xl flex flex-col sm:flex-row items-center justify-between py-4 border-b border-slate-800 gap-3">
     <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30">
+      <div class="w-11 h-11 rounded-2xl bg-indigo-600 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/30">
         <i class="fa-solid fa-microphone-lines text-white"></i>
       </div>
       <div>
-        <h1 class="text-lg font-bold bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">تغییر صدای حرفه‌ای</h1>
-        <p class="text-xs text-slate-400">پردازش آنی بدون افت کیفیت</p>
+        <h1 class="text-lg sm:text-xl font-bold bg-gradient-to-r from-indigo-400 via-purple-300 to-pink-400 bg-clip-text text-transparent">استودیو تغییر صدای آنلاین</h1>
+        <p class="text-xs text-slate-400">۱۶ افکت پیشرفته زن، مرد و فانتزی با پردازش آنی</p>
       </div>
     </div>
 
-    <a href="https://t.me/oajor" target="_blank" class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-900 transition-all text-xs">
-      <i class="fa-brands fa-telegram text-sm text-sky-400"></i>
+    <!-- Creator Tag -->
+    <a href="https://t.me/oajor" target="_blank" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/80 border border-indigo-500/40 text-indigo-300 hover:bg-indigo-900 transition-all text-xs shadow-md">
+      <i class="fa-brands fa-telegram text-base text-sky-400"></i>
       <span>طراحی و توسعه: <strong>oajor@</strong></span>
     </a>
   </header>
 
-  <main class="w-full max-w-xl my-6 flex flex-col gap-5">
+  <!-- Main Box -->
+  <main class="w-full max-w-2xl my-5 flex flex-col gap-4">
+
+    <!-- Audio Input -->
     <div class="grid grid-cols-2 gap-3">
       <div id="recordBtn" onclick="toggleRecord()" class="bg-slate-900 border border-slate-800 hover:border-rose-500/50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-all">
         <div class="w-12 h-12 rounded-full bg-rose-600/20 flex items-center justify-center">
           <i id="micIcon" class="fa-solid fa-microphone text-rose-500 text-xl"></i>
         </div>
         <div class="font-medium text-xs text-slate-200" id="recordStatus">ضبط با میکروفون</div>
-        <div id="recordTimer" class="text-[10px] font-mono text-slate-400">00:00</div>
+        <div id="recordTimer" class="text-[11px] font-mono text-slate-400">00:00</div>
       </div>
 
       <label class="bg-slate-900 border border-dashed border-slate-800 hover:border-indigo-500/50 p-4 rounded-2xl flex flex-col items-center justify-center text-center gap-2 cursor-pointer transition-all">
         <div class="w-12 h-12 rounded-full bg-indigo-600/20 flex items-center justify-center">
           <i class="fa-solid fa-cloud-arrow-up text-indigo-400 text-xl"></i>
         </div>
-        <div class="font-medium text-xs text-indigo-300">انتخاب فایل صوتی</div>
-        <span id="audioTrackName" class="text-[10px] text-slate-500 truncate max-w-[120px]">هنوز فایلی انتخاب نشده</span>
+        <div class="font-medium text-xs text-indigo-300">انتخاب یا آپلود فایل صوتی</div>
+        <span id="audioTrackName" class="text-[11px] text-slate-500 truncate max-w-[140px]">هنوز فایلی انتخاب نشده</span>
         <input type="file" id="audioFileInput" accept="audio/*" class="hidden" onchange="handleFileUpload(event)">
       </label>
     </div>
 
-    <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl flex flex-col gap-3">
-      <div class="text-xs font-semibold text-slate-400">نوع تغییر صدا را انتخاب کنید:</div>
-      <div class="grid grid-cols-4 gap-2">
-        <button onclick="applyPreset('normal')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-user text-slate-400"></i> اصلی
+    <!-- Effect Presets Grid (16 Effects) -->
+    <div class="bg-slate-900/90 border border-slate-800 p-4 rounded-2xl flex flex-col gap-3">
+      <div class="flex items-center justify-between">
+        <span class="text-xs font-semibold text-slate-300">افکت مورد نظر را انتخاب کنید:</span>
+        <span id="activePresetName" class="text-xs text-indigo-400 font-medium">صدای انتخابی: صدای اصلی</span>
+      </div>
+
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+        <!-- جنسیت و سن -->
+        <button onclick="applyPreset('female', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-person-dress text-pink-400 text-lg"></i> صدای زن / دختر
         </button>
-        <button onclick="applyPreset('chipmunk')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-paw text-amber-400"></i> سنجاب
+        <button onclick="applyPreset('male', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-person text-sky-400 text-lg"></i> صدای مردانه بم
         </button>
-        <button onclick="applyPreset('monster')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-dragon text-purple-400"></i> دیو / بم
+        <button onclick="applyPreset('child', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-child text-yellow-300 text-lg"></i> صدای کودکانه
         </button>
-        <button onclick="applyPreset('robot')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-robot text-cyan-400"></i> ربات
+        <button onclick="applyPreset('oldman', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-person-cane text-amber-600 text-lg"></i> پیرمرد / راوی
         </button>
-        <button onclick="applyPreset('walkie')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-walkie-talkie text-emerald-400"></i> بی‌سیم
+
+        <!-- فانتزی و محبوب -->
+        <button onclick="applyPreset('normal', this)" class="preset-btn active-preset p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-volume-high text-slate-400 text-lg"></i> صدای اصلی
         </button>
-        <button onclick="applyPreset('cave')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-mountain text-blue-400"></i> اکو غار
+        <button onclick="applyPreset('chipmunk', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-paw text-amber-400 text-lg"></i> سنجاب (کارتونی)
         </button>
-        <button onclick="applyPreset('hacker')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-user-secret text-emerald-500"></i> هکر
+        <button onclick="applyPreset('monster', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-dragon text-purple-400 text-lg"></i> هیولا / ترسناک
         </button>
-        <button onclick="applyPreset('helium')" class="p-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs text-slate-300 flex flex-col items-center gap-1">
-          <i class="fa-solid fa-cloud text-pink-400"></i> هلیوم
+        <button onclick="applyPreset('anime', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-wand-magic-sparkles text-fuchsia-400 text-lg"></i> انیمه / کیوت
+        </button>
+
+        <!-- تکنولوژی و علمی تخیلی -->
+        <button onclick="applyPreset('robot', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-robot text-cyan-400 text-lg"></i> ربات سایبرپانک
+        </button>
+        <button onclick="applyPreset('alien', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-user-astronaut text-emerald-400 text-lg"></i> آدم‌فضایی
+        </button>
+        <button onclick="applyPreset('hacker', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-user-secret text-emerald-500 text-lg"></i> هکر / ناشناس
+        </button>
+        <button onclick="applyPreset('helium', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-cloud text-rose-300 text-lg"></i> گاز هلیوم
+        </button>
+
+        <!-- محیط و ابزارها -->
+        <button onclick="applyPreset('walkie', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-walkie-talkie text-teal-400 text-lg"></i> بی‌سیم پلیس
+        </button>
+        <button onclick="applyPreset('oldradio', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-radio text-orange-400 text-lg"></i> رادیوی قدیمی
+        </button>
+        <button onclick="applyPreset('concert', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-guitar text-indigo-400 text-lg"></i> سالن کنسرت
+        </button>
+        <button onclick="applyPreset('cave', this)" class="preset-btn p-3 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700/70 text-slate-200 flex flex-col items-center gap-1.5 transition-all">
+          <i class="fa-solid fa-mountain text-blue-400 text-lg"></i> اکو غار عمیق
         </button>
       </div>
     </div>
 
+    <!-- Actions -->
     <div class="flex gap-2">
-      <button id="previewBtn" onclick="togglePlayback()" disabled class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs flex items-center justify-center gap-2">
-        <i id="playIcon" class="fa-solid fa-play"></i> پخش تست
+      <button id="previewBtn" onclick="togglePlayback()" disabled class="flex-1 py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-indigo-600/30">
+        <i id="playIcon" class="fa-solid fa-play"></i> پخش آزمایشی افکت
       </button>
-      <button id="downloadBtn" onclick="downloadModifiedAudio()" disabled class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs flex items-center justify-center gap-2">
+      <button id="downloadBtn" onclick="downloadModifiedAudio()" disabled class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 disabled:opacity-40 disabled:cursor-not-allowed font-medium text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-lg shadow-emerald-600/30">
         <i class="fa-solid fa-download"></i> دانلود خروجی (WAV)
       </button>
     </div>
+
   </main>
 
-  <footer class="w-full max-w-xl text-center py-4 border-t border-slate-800/80 text-xs text-slate-500">
-    ساخته شده توسط <a href="https://t.me/oajor" target="_blank" class="text-indigo-400 font-semibold hover:underline">oajor@</a> برای اعضای کانال
+  <!-- Footer -->
+  <footer class="w-full max-w-2xl text-center py-4 border-t border-slate-800/80 text-xs text-slate-500">
+    طراحی شده با افتخار توسط <a href="https://t.me/oajor" target="_blank" class="text-indigo-400 font-semibold hover:underline">oajor@</a> برای اعضای محترم کانال
   </footer>
 
   <script>
     let audioCtx = null, originalBuffer = null, currentSource = null, isPlaying = false, isRecording = false, mediaRecorder = null, recordedChunks = [], recordInterval = null, recordSeconds = 0;
-    let settings = { pitch: 1.0, bass: 0, treble: 0, echoDelay: 0 };
+    
+    // پارامترهای پیشرفته فیلتر
+    let settings = {
+      pitch: 1.0,
+      bass: 0,
+      midGain: 0,
+      midFreq: 1000,
+      treble: 0,
+      echoDelay: 0,
+      echoFeedback: 0.3,
+      bandpass: false,
+      bandFreq: 1500
+    };
 
     function initAudio() {
       if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -125,12 +186,12 @@
             const blob = new Blob(recordedChunks, { type: 'audio/webm' });
             const arrayBuffer = await blob.arrayBuffer();
             originalBuffer = await audioCtx.decodeAudioData(arrayBuffer);
-            document.getElementById('audioTrackName').innerText = 'صدای ضبط‌شده';
+            document.getElementById('audioTrackName').innerText = 'صدای ضبط‌شده از میکروفون';
             enableControls();
           };
           mediaRecorder.start();
           isRecording = true;
-          document.getElementById('recordStatus').innerText = 'توقف ضبط';
+          document.getElementById('recordStatus').innerText = 'در حال ضبط... (کلیک برای اتمام)';
           document.getElementById('micIcon').className = 'fa-solid fa-stop text-white';
           recordSeconds = 0;
           recordInterval = setInterval(() => {
@@ -140,7 +201,7 @@
             document.getElementById('recordTimer').innerText = `${m}:${s}`;
           }, 1000);
         } catch (err) {
-          alert('لطفاً دسترسی میکروفون را مجاز کنید.');
+          alert('لطفاً دسترسی میکروفون را در مرورگر مجاز کنید.');
         }
       } else {
         mediaRecorder.stop();
@@ -157,31 +218,167 @@
       document.getElementById('downloadBtn').disabled = false;
     }
 
-    function applyPreset(t) {
-      if (t === 'normal') settings = { pitch: 1.0, bass: 0, treble: 0, echoDelay: 0 };
-      if (t === 'chipmunk') settings = { pitch: 1.6, bass: -6, treble: 8, echoDelay: 0 };
-      if (t === 'monster') settings = { pitch: 0.65, bass: 12, treble: -8, echoDelay: 0.1 };
-      if (t === 'robot') settings = { pitch: 0.9, bass: 4, treble: 4, echoDelay: 0.05 };
-      if (t === 'walkie') settings = { pitch: 1.05, bass: -15, treble: 12, echoDelay: 0 };
-      if (t === 'cave') settings = { pitch: 0.95, bass: 3, treble: 0, echoDelay: 0.35 };
-      if (t === 'hacker') settings = { pitch: 0.8, bass: 8, treble: -5, echoDelay: 0.15 };
-      if (t === 'helium') settings = { pitch: 1.8, bass: -10, treble: 10, echoDelay: 0 };
-      if (isPlaying) { stopPlayback(); startPlayback(); }
+    function applyPreset(t, btnElement) {
+      // Highlight Button
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active-preset'));
+      if (btnElement) btnElement.classList.add('active-preset');
+      const title = btnElement ? btnElement.innerText.trim() : 'انتخابی';
+      document.getElementById('activePresetName').innerText = 'صدای انتخابی: ' + title;
+
+      // ریست پیش‌فرض
+      settings = { pitch: 1.0, bass: 0, midGain: 0, midFreq: 1000, treble: 0, echoDelay: 0, echoFeedback: 0.3, bandpass: false, bandFreq: 1500 };
+
+      // ۱۶ افکت تفکیک شده
+      switch(t) {
+        case 'normal':
+          settings.pitch = 1.0; break;
+        case 'female': // صدای دخترانه / زن با شفافیت فرکانس‌های بالا
+          settings.pitch = 1.25;
+          settings.bass = -10;
+          settings.midFreq = 2200;
+          settings.midGain = 6;
+          settings.treble = 7;
+          break;
+        case 'male': // صدای بم مردانه و تقویت باس
+          settings.pitch = 0.82;
+          settings.bass = 12;
+          settings.midFreq = 500;
+          settings.midGain = 5;
+          settings.treble = -6;
+          break;
+        case 'child': // صدای خردسال و کودک
+          settings.pitch = 1.4;
+          settings.bass = -14;
+          settings.midFreq = 2800;
+          settings.midGain = 8;
+          settings.treble = 6;
+          break;
+        case 'oldman': // پیرمرد بم و کمی خش‌دار
+          settings.pitch = 0.75;
+          settings.bass = 10;
+          settings.treble = -8;
+          settings.echoDelay = 0.04;
+          settings.echoFeedback = 0.15;
+          break;
+        case 'chipmunk': // سنجاب
+          settings.pitch = 1.7;
+          settings.bass = -16;
+          settings.treble = 10;
+          break;
+        case 'monster': // دیو / غول
+          settings.pitch = 0.6;
+          settings.bass = 15;
+          settings.treble = -10;
+          settings.echoDelay = 0.12;
+          settings.echoFeedback = 0.4;
+          break;
+        case 'anime': // انیمه
+          settings.pitch = 1.35;
+          settings.bass = -8;
+          settings.treble = 9;
+          break;
+        case 'robot': // رباتیک
+          settings.pitch = 0.95;
+          settings.echoDelay = 0.025;
+          settings.echoFeedback = 0.65;
+          break;
+        case 'alien': // فضایی
+          settings.pitch = 1.15;
+          settings.echoDelay = 0.07;
+          settings.echoFeedback = 0.75;
+          break;
+        case 'hacker': // ناشناس
+          settings.pitch = 0.78;
+          settings.bass = 8;
+          settings.treble = -4;
+          settings.echoDelay = 0.18;
+          settings.echoFeedback = 0.3;
+          break;
+        case 'helium': // گاز هلیوم
+          settings.pitch = 1.85;
+          settings.bass = -18;
+          settings.treble = 12;
+          break;
+        case 'walkie': // بیسیم پلیس
+          settings.pitch = 1.05;
+          settings.bandpass = true;
+          settings.bandFreq = 1800;
+          break;
+        case 'oldradio': // رادیو قدیمی
+          settings.pitch = 0.98;
+          settings.bandpass = true;
+          settings.bandFreq = 1100;
+          break;
+        case 'concert': // سالن کنسرت
+          settings.pitch = 1.0;
+          settings.bass = 4;
+          settings.treble = 3;
+          settings.echoDelay = 0.22;
+          settings.echoFeedback = 0.5;
+          break;
+        case 'cave': // غار
+          settings.pitch = 0.92;
+          settings.bass = 6;
+          settings.echoDelay = 0.42;
+          settings.echoFeedback = 0.65;
+          break;
+      }
+
+      if (isPlaying) {
+        stopPlayback();
+        startPlayback();
+      }
     }
 
     function buildPipeline(ctx, src) {
       src.playbackRate.value = settings.pitch;
-      const b = ctx.createBiquadFilter(); b.type = 'lowshelf'; b.frequency.value = 250; b.gain.value = settings.bass;
-      const tr = ctx.createBiquadFilter(); tr.type = 'highshelf'; tr.frequency.value = 3500; tr.gain.value = settings.treble;
-      src.connect(b); b.connect(tr);
-      let last = tr;
-      if (settings.echoDelay > 0) {
-        const d = ctx.createDelay(); d.delayTime.value = settings.echoDelay;
-        const fb = ctx.createGain(); fb.gain.value = 0.4;
-        last.connect(d); d.connect(fb); fb.connect(d);
-        const m = ctx.createGain(); last.connect(m); d.connect(m); last = m;
+
+      const bass = ctx.createBiquadFilter();
+      bass.type = 'lowshelf';
+      bass.frequency.value = 220;
+      bass.gain.value = settings.bass;
+
+      const mid = ctx.createBiquadFilter();
+      mid.type = 'peaking';
+      mid.frequency.value = settings.midFreq;
+      mid.gain.value = settings.midGain;
+
+      const treble = ctx.createBiquadFilter();
+      treble.type = 'highshelf';
+      treble.frequency.value = 3200;
+      treble.gain.value = settings.treble;
+
+      src.connect(bass);
+      bass.connect(mid);
+      mid.connect(treble);
+      let lastNode = treble;
+
+      if (settings.bandpass) {
+        const bp = ctx.createBiquadFilter();
+        bp.type = 'bandpass';
+        bp.frequency.value = settings.bandFreq;
+        bp.Q.value = 1.2;
+        lastNode.connect(bp);
+        lastNode = bp;
       }
-      return last;
+
+      if (settings.echoDelay > 0) {
+        const delay = ctx.createDelay();
+        delay.delayTime.value = settings.echoDelay;
+        const feedback = ctx.createGain();
+        feedback.gain.value = settings.echoFeedback;
+
+        lastNode.connect(delay);
+        delay.connect(feedback);
+        feedback.connect(delay);
+
+        const merger = ctx.createGain();
+        lastNode.connect(merger);
+        delay.connect(merger);
+        lastNode = merger;
+      }
+
+      return lastNode;
     }
 
     function togglePlayback() { isPlaying ? stopPlayback() : startPlayback(); }
@@ -191,31 +388,42 @@
       initAudio();
       currentSource = audioCtx.createBufferSource();
       currentSource.buffer = originalBuffer;
-      const p = buildPipeline(audioCtx, currentSource);
-      p.connect(audioCtx.destination);
+      const pipeline = buildPipeline(audioCtx, currentSource);
+      pipeline.connect(audioCtx.destination);
       currentSource.onended = () => stopPlayback();
       currentSource.start();
       isPlaying = true;
       document.getElementById('playIcon').className = 'fa-solid fa-square';
+      document.getElementById('previewBtn').innerHTML = '<i class="fa-solid fa-square"></i> توقف پخش';
     }
 
     function stopPlayback() {
-      if (currentSource) { try { currentSource.stop(); } catch(e){} currentSource.disconnect(); }
+      if (currentSource) {
+        try { currentSource.stop(); } catch(e){}
+        currentSource.disconnect();
+      }
       isPlaying = false;
       document.getElementById('playIcon').className = 'fa-solid fa-play';
+      document.getElementById('previewBtn').innerHTML = '<i class="fa-solid fa-play"></i> پخش آزمایشی افکت';
     }
 
     async function downloadModifiedAudio() {
       if (!originalBuffer) return;
-      const dur = originalBuffer.duration / settings.pitch;
-      const offCtx = new OfflineAudioContext(originalBuffer.numberOfChannels, Math.ceil(originalBuffer.sampleRate * dur), originalBuffer.sampleRate);
-      const src = offCtx.createBufferSource();
+      const duration = originalBuffer.duration / settings.pitch;
+      const offlineCtx = new OfflineAudioContext(
+        originalBuffer.numberOfChannels,
+        Math.ceil(originalBuffer.sampleRate * duration),
+        originalBuffer.sampleRate
+      );
+
+      const src = offlineCtx.createBufferSource();
       src.buffer = originalBuffer;
-      const p = buildPipeline(offCtx, src);
-      p.connect(offCtx.destination);
+      const pipeline = buildPipeline(offlineCtx, src);
+      pipeline.connect(offlineCtx.destination);
       src.start();
-      const res = await offCtx.startRendering();
-      const wav = bufferToWav(res);
+
+      const rendered = await offlineCtx.startRendering();
+      const wav = bufferToWav(rendered);
       const a = document.createElement('a');
       a.href = URL.createObjectURL(wav);
       a.download = 'voice-oajor.wav';
@@ -243,5 +451,4 @@
     }
   </script>
 </body>
-  </html>
-  
+</html>
